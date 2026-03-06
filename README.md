@@ -28,6 +28,7 @@ By default the script looks at `.` (the directory where it's invoked), or at the
 - CSS (`.css`)
 - Shell scripts (`.sh`)
 - Makefiles (`Makefile`)
+- Markdown (`.md`)
 
 Files under a `target/` directory are ignored.
 

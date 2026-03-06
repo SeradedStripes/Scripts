@@ -30,6 +30,7 @@ language_exts = {
     'c': ['c', 'h', 'hpp', 'hh', 'hhpp', 'cc', 'cxx', 'hxx', 'h++', 'c++'],
     'cpp': ['cpp'],
     'html': ['html'],
+    'md': ['md'],
     'css': ['css'],
     'sh': ['sh'],
     'make': ['Makefile'],
@@ -82,8 +83,8 @@ def analyze(s: str, ext: str='rs'):
             'total_comment_lines': total_comment_lines,
         }
 
-    # HTML needs <!-- --> comment handling
-    if ext == 'html':
+    # HTML and Markdown (.md) use <!-- --> comments
+    if ext in ('html','md'):
         inside = False
         for idx, line in enumerate(lines):
             i = 0
@@ -278,7 +279,7 @@ def print_table(ext, files_list):
     return totals
 
 summary = []
-for lang in ('rs','c','cpp','asm','html','css','sh','make'):
+for lang in ('rs','c','cpp','asm','html','md','css','sh','make'):
     if files.get(lang):
         tot = print_table(lang, files[lang])
         summary.append((lang, tot['total_lines'], tot.get('doc_comment', 0)))
