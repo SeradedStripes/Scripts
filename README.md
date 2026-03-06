@@ -2,6 +2,9 @@ Lil Script I made
 
 # Scripts
 
+This repository is released under the [MIT License](LICENSE.md)
+
+
 - `stats.sh` – collect line & comment statistics for various file types.
 
 ## stats.sh
