@@ -29,6 +29,8 @@ language_exts = {
     'asm': ['asm'],
     'c': ['c', 'h', 'hpp', 'hh', 'hhpp', 'cc', 'cxx', 'hxx', 'h++', 'c++'],
     'cpp': ['cpp'],
+    'js': ['js', 'jsx'],
+    'ts': ['ts', 'tsx'],
     'html': ['html'],
     'md': ['md'],
     'css': ['css'],
@@ -279,7 +281,7 @@ def print_table(ext, files_list):
     return totals
 
 summary = []
-for lang in ('rs','c','cpp','asm','html','md','css','sh','make'):
+for lang in ('rs','c','cpp','js','ts','asm','html','md','css','sh','make'):
     if files.get(lang):
         tot = print_table(lang, files[lang])
         summary.append((lang, tot['total_lines'], tot.get('doc_comment', 0)))

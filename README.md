@@ -32,6 +32,8 @@ By default the script looks at `.` (the directory where it's invoked), or at the
 - Shell scripts (`.sh`)
 - Makefiles (`Makefile`)
 - Markdown (`.md`)
+- JavaScript (`.js`, `.jsx`)
+- TypeScript (`.ts`, `.tsx`)
 
 Files under a `target/` directory are ignored.
 
