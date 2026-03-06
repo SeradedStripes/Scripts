@@ -23,8 +23,8 @@ else:
             root = arg
 
 # Use os.walk to robustly find .rs files in subfolders (handles symlinks and unusual paths)
-files = {'rs': [], 'asm': [], 'c': [], 'html': [], 'css': [], 'sh': []}
-for ext in ('rs','asm','c','html','css','sh'):
+files = {'rs': [], 'asm': [], 'c': [], 'cpp': [], 'html': [], 'css': [], 'sh': []}
+for ext in ('rs','asm','c','cpp','html','css','sh'):
     for p in root.rglob(f"*.{ext}"):
         # skip any files under a "target" directory
         if 'target' in p.parts:
@@ -265,7 +265,7 @@ def print_table(ext, files_list):
     return totals
 
 summary = []
-for ext in ('rs','c','asm','html','css','sh'):
+for ext in ('rs','c','cpp','asm','html','css','sh'):
     if files.get(ext):
         tot = print_table(ext, files[ext])
         summary.append((ext, tot['total_lines'], tot.get('doc_comment', 0)))
