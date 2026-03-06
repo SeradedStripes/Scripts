@@ -1,3 +1,5 @@
+Lil Script I made
+
 # Scripts
 
 - `stats.sh` – collect line & comment statistics for various file types.
@@ -19,12 +21,13 @@ By default the script looks at `.` (the directory where it's invoked), or at the
 ### Supported languages
 
 - Rust (`.rs`)
-- C (`.c`)
+- C and related filetypes (`.c`, `.h`, `.hpp`, `.hh`, `.cc`, `.cxx`, etc.)
 - C++ (`.cpp`)
 - Assembly (`.asm`)
 - HTML (`.html`)
 - CSS (`.css`)
 - Shell scripts (`.sh`)
+- Makefiles (`Makefile`)
 
 Files under a `target/` directory are ignored.
 

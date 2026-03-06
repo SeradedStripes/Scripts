@@ -23,14 +23,27 @@ else:
             root = arg
 
 # Use os.walk to robustly find .rs files in subfolders (handles symlinks and unusual paths)
-files = {'rs': [], 'asm': [], 'c': [], 'cpp': [], 'html': [], 'css': [], 'sh': []}
-for ext in ('rs','asm','c','cpp','html','css','sh'):
-    for p in root.rglob(f"*.{ext}"):
-        # skip any files under a "target" directory
-        if 'target' in p.parts:
-            continue
-        files[ext].append(p)
-    files[ext] = sorted(files[ext])
+# group extensions by logical language category (C includes headers and variants)
+language_exts = {
+    'rs': ['rs'],
+    'asm': ['asm'],
+    'c': ['c', 'h', 'hpp', 'hh', 'hhpp', 'cc', 'cxx', 'hxx', 'h++', 'c++'],
+    'cpp': ['cpp'],
+    'html': ['html'],
+    'css': ['css'],
+    'sh': ['sh'],
+    'make': ['Makefile'],
+}
+
+files = {lang: [] for lang in language_exts}
+for lang, exts in language_exts.items():
+    for ext in exts:
+        for p in root.rglob(f"*.{ext}"):
+            # skip any files under a "target" directory
+            if 'target' in p.parts:
+                continue
+            files[lang].append(p)
+    files[lang] = sorted(files[lang])
 
 def analyze(s: str, ext: str='rs'):
     lines = s.splitlines()
@@ -97,8 +110,8 @@ def analyze(s: str, ext: str='rs'):
             'total_comment_lines': total_comment_lines,
         }
 
-    # shell files use simple '#' comments
-    if ext == 'sh':
+    # shell files and Makefiles use simple '#' comments
+    if ext in ('sh','make'):
         for idx, line in enumerate(lines):
             stripped = line.lstrip()
             if not stripped:
@@ -265,10 +278,10 @@ def print_table(ext, files_list):
     return totals
 
 summary = []
-for ext in ('rs','c','cpp','asm','html','css','sh'):
-    if files.get(ext):
-        tot = print_table(ext, files[ext])
-        summary.append((ext, tot['total_lines'], tot.get('doc_comment', 0)))
+for lang in ('rs','c','cpp','asm','html','css','sh','make'):
+    if files.get(lang):
+        tot = print_table(lang, files[lang])
+        summary.append((lang, tot['total_lines'], tot.get('doc_comment', 0)))
 
 # print summary table if we found anything
 if summary:
